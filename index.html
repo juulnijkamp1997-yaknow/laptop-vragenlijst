@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0b0a">
+<title>Vragenlijst nieuwe laptop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700;800&amp;display=swap">
+<style>
+/* VOICE: calm, warm, plain Dutch; one quiet page, nothing technical in sight.
+   IDEA: a low-vision intake card printed white on dark board, read top to bottom.
+   PICTURE: the questionnaire itself, under a fixed black band carrying one safety-yellow progress bar.
+   COLOUR and TYPE: always dark (#161615), off-white text, yellow #ffe600 for progress, choices and the send button; Atkinson Hyperlegible Next.
+   LAYOUT: one long column (max 46rem), fixed progress band, big tap targets, two option columns on the unfolded Fold screen. */
+:root{color-scheme:dark;--bg:#161615;--ink:#f2f2ee;--muted:#c9c9c2;--plane:#262624;--line:#8a8a83;--band:#0b0b0a;--track:#3f3f3b;--yellow:#ffe600;--hh:60px}
+html{font-size:112.5%;background:var(--bg);scroll-padding-top:calc(var(--hh) + 16px);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;padding-top:var(--hh);background:var(--bg);color:var(--ink);font:400 1rem/1.55 "Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,Roboto,"Segoe UI",Arial,sans-serif;overflow-x:clip}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{position:fixed;top:0;left:0;right:0;z-index:10;background:var(--band);border-bottom:1px solid #2c2c29;padding:14px max(4vw,16px)}
+.top-in{max-width:46rem;margin:0 auto;display:flex;align-items:center;gap:14px}
+.bar{flex:1;height:14px;border-radius:8px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--yellow);border-radius:8px}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .4s ease}}
+.pct{flex:none;font-weight:800;font-size:min(1rem,20px);white-space:nowrap}
+
+main{max-width:46rem;margin:0 auto;padding:clamp(24px,4vw,44px) max(4vw,16px) 88px}
+h1{font-size:clamp(2rem,1.5rem + 2.4vw,2.8rem);font-weight:800;line-height:1.08;text-wrap:balance;margin:.1em 0 .45em;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,1.3rem + 1.4vw,2.1rem);font-weight:800;line-height:1.12;text-wrap:balance;margin:0 0 .35em}
+h1:focus,h2:focus{outline:none}
+.lead{font-size:1.2rem;line-height:1.5;max-width:60ch;margin:0 0 .8em}
+.intro{color:var(--muted);max-width:60ch;margin:0}
+.small{font-size:.9rem;color:var(--muted)}
+.sec{margin-top:56px;padding-top:28px;border-top:3px solid var(--plane)}
+
+.q{border:0;margin:34px 0 0;padding:0}
+.q legend{display:block;width:100%;padding:0;margin:0 0 8px;font-size:1.2rem;font-weight:700;line-height:1.3}
+.help{margin:0 0 12px;color:var(--muted);max-width:62ch}
+.max{font-weight:700;color:var(--ink)}
+.max:empty{display:none}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));margin-top:10px}
+.opt{display:flex;gap:12px;align-items:center;min-height:3.2rem;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:transparent;cursor:pointer;line-height:1.35}
+.opt input{appearance:none;-webkit-appearance:none;flex:none;width:1.45rem;height:1.45rem;margin:0;border:2px solid currentColor;border-radius:50%;display:grid;place-items:center;background:transparent;cursor:pointer}
+.opt input[type=checkbox]{border-radius:6px}
+.opt input:checked::before{content:"";width:.7rem;height:.7rem;border-radius:50%;background:currentColor}
+.opt input[type=checkbox]:checked::before{width:.95rem;height:.95rem;border-radius:0;clip-path:polygon(12% 50%,0 64%,38% 100%,100% 22%,87% 9%,38% 72%)}
+.opt input:focus-visible{outline:none}
+.opt:has(input:focus-visible){outline:3px solid var(--yellow);outline-offset:3px}
+.opt:has(input:checked){background:var(--yellow);color:#111;border-color:var(--yellow)}
+.opt:has(input:disabled){opacity:.4;cursor:not-allowed}
+@media (hover:hover){.opt:hover{border-color:var(--ink)}}
+.note-btn{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;padding:6px 0;border:0;background:none;color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+textarea,input[type=text]{display:block;width:100%;font-size:max(1rem,16px);background:#0f0f0e;color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+textarea{min-height:6.5rem;resize:vertical}
+textarea::placeholder,input::placeholder{color:#9d9d96}
+.note{margin-top:6px}
+.count{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+.count:empty{display:none}
+
+.end{margin-top:64px;padding:28px 0 0;border-top:3px solid var(--plane)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:4rem;padding:14px 22px;border-radius:14px;border:2px solid var(--yellow);background:var(--yellow);color:#111;font-weight:800;font-size:1.3rem;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;margin:18px 0 10px}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line);font-size:1.05rem;min-height:3.4rem;width:auto;display:inline-flex}
+.err{color:var(--yellow);font-weight:700;margin:6px 0}
+.err:empty{display:none}
+.thanks{min-height:calc(100dvh - var(--hh) - 140px);display:flex;flex-direction:column;justify-content:center;padding:24px 0}
+.thanks h1{font-size:clamp(2.3rem,1.7rem + 3vw,3.4rem)}
+.mark{width:84px;height:84px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;margin-bottom:22px}
+.mark svg{width:46px;height:46px}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+ <div class="top-in">
+  <div class="bar" id="bar" role="progressbar" aria-label="Voortgang van de vragenlijst" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="fill"></i></div>
+  <span class="pct" id="pct" aria-hidden="true">0%</span>
+ </div>
+</div>
+<main id="main"><noscript><p>Zet JavaScript aan om deze vragenlijst in te vullen.</p></noscript></main>
+<script>
+{
+const FORM='https://docs.google.com/forms/d/e/1FAIpQLSdlduUwHEIfijLqauClcRJjwi3Rd66dnCxSUBETgxk4F7tQwQ/formResponse';
+const E_NAAM='entry.2113078614',E_TXT='entry.1795189257',MAXURL=7600,KEY='laptop-vragenlijst-v1';
+const SILENT=window.__SILENT__===true||/\.github\.io$/i.test(location.hostname);
+const ALL='Kies alles wat voor jou geldt.';
+
+const P=[
+{id:'nu',t:'Je huidige laptop',i:'Eerst iets over je huidige HP-laptop en hoe je die gebruikt. Zo weten we wat er beter moet.',q:[
+ {id:'uren',t:'1',s:'Gebruik per dag',q:'Hoeveel gebruik je je laptop op een gemiddelde dag?',o:['Minder dan 1 uur','1 tot 3 uur','3 tot 6 uur','Meer dan 6 uur','Niet elke dag']},
+ {id:'ergernis',t:'m',s:'Ergernissen nu',q:'Waar erger je je het meest aan bij je huidige laptop?',h:ALL,o:['Hij is traag, bijvoorbeeld bij opstarten of programma’s openen','Hij hapert of loopt vast als er veel openstaat','Het scherm is te donker of flets','Tekst is moeilijk te lezen, ook met vergroting','Spiegelingen of schittering op het scherm','De accu is snel leeg','Hij is zwaar om mee te nemen','De ventilator is luid of hij wordt warm','Wifi is traag of valt weg','Slecht beeld of geluid bij videobellen','Het toetsenbord of het touchpad','Te weinig opslagruimte','!Nergens echt aan','+Iets anders']},
+ {id:'houden',t:'m',s:'Wil houden',q:'Wat vind je juist fijn aan je huidige laptop en wil je zeker houden?',h:ALL,o:['Het formaat van het scherm (15,6 inch)','Dat het scherm mat is en weinig spiegelt','Het cijferblok rechts op het toetsenbord','De verlichting onder de toetsen','De aansluitingen: HDMI, gewone USB, netwerkkabel en SD-kaart','Windows','Het merk HP','!Niets in het bijzonder','+Iets anders']},
+ {id:'tevreden',t:'1',s:'Tevreden over snelheid',q:'Hoe tevreden ben je over de snelheid van je huidige laptop?',o:['Heel ontevreden','Ontevreden','Gaat wel','Tevreden','Heel tevreden']},
+ {id:'windows',t:'1',s:'Windows-versie nu',q:'Welke versie van Windows staat er nu op je laptop?',h:'Weet je het niet? Geen probleem. Windows 10 wordt sinds oktober 2025 niet meer ondersteund door Microsoft, dus het is handig om te weten.',o:['Windows 11','Windows 10','Weet ik niet']}
+]},
+{id:'ogen',t:'Je ogen en het scherm',i:'Het scherm is voor jou het belangrijkste onderdeel. Deze vragen helpen om een scherm te vinden dat prettig en duidelijk is voor jouw ogen. Er zijn geen foute antwoorden.',q:[
+ {id:'vergroting',t:'m',s:'Hulpmiddelen nu',q:'Wat gebruik je nu om dingen op het scherm groter of duidelijker te maken?',h:'Kies alles wat je gebruikt.',o:['Alles groter via de Windows-instelling ‘Schaal’, bijvoorbeeld 150%','Grotere letters via de Windows-instelling ‘Tekstgrootte’','Het Vergrootglas van Windows','Inzoomen in de browser (Ctrl en +)','software|Vergrotingssoftware, zoals ZoomText, Fusion of SuperNova','Donkere modus','Een hoog-contrastthema of kleurfilter','Een grote of opvallende muisaanwijzer','Dichter bij het scherm gaan zitten','!Niets','!Weet ik niet','+Iets anders']},
+ {id:'software',t:'1',s:'Vergrotingssoftware',show:{id:'vergroting',any:['software']},q:'Hoe heb je die vergrotingssoftware geregeld?',h:'Dan kijken we of het programma op de nieuwe laptop werkt en hoe je licentie meegaat. Zet de naam en versie gerust in de toelichting.',o:['Zelf gekocht, en die licentie wil ik meenemen','Geregeld via werk, UWV of zorgverzekeraar','Een gratis versie of proefversie','Weet ik niet']},
+ {id:'afstand',t:'1',s:'Kijkafstand',q:'Hoe dicht zit je meestal bij het scherm?',o:['Normaal: ongeveer een armlengte','Wat dichterbij dan de meeste mensen','Heel dichtbij: met mijn gezicht vlak bij het scherm','Dat wisselt']},
+ {id:'helder',t:'1',s:'Helderheid nu',q:'Hoe vind je de helderheid van je huidige scherm, op de hoogste stand?',h:'Je huidige scherm is vrij donker: 250 nits. Betere laptopschermen halen 400 nits of meer.',o:['Te donker, ook binnen','Binnen oké, maar bij daglicht te donker','Meestal goed','Eerder te fel','Weet ik niet']},
+ {id:'licht',t:'1',s:'Licht waar je werkt',q:'In wat voor licht werk je meestal?',o:['Gedimd licht of in het donker','Gewoon binnenlicht','Veel daglicht, bijvoorbeeld bij een raam','Wisselend: binnen, buiten en bij klanten']},
+ {id:'fel',t:'1',s:'Gevoelig voor fel licht',q:'Ben je gevoelig voor fel licht of schittering?',o:['Ja, heel gevoelig: fel licht verblindt of doet pijn','Een beetje','Nee','Weet ik niet']},
+ {id:'glans',t:'1',s:'Mat of glanzend scherm',q:'Hoe erg vind je spiegelingen in het scherm, zoals een lamp of raam die je erin ziet?',h:'Matte schermen spiegelen weinig. Glanzende schermen geven vaak meer contrast en diepere kleuren, maar spiegelen meer. Je huidige scherm is mat.',o:['Heel storend: het moet een mat scherm zijn','Een beetje spiegeling is oké als het beeld daardoor duidelijker is','Maakt me niet uit','Weet ik niet']},
+ {id:'lezen',t:'1',s:'Leest het prettigst',q:'Wat leest voor jou het prettigst?',o:['Zwarte tekst op een witte achtergrond','Witte tekst op een donkere achtergrond (donkere modus)','Hoog contrast, zoals geel op zwart','Dat wisselt','Weet ik niet']},
+ {id:'ogenmoe',t:'1',s:'Vermoeide ogen of flikkeren',q:'Krijg je van schermen snel vermoeide ogen of hoofdpijn, of het gevoel dat het beeld flikkert?',h:'Sommige schermen knipperen onzichtbaar snel als ze gedimd zijn. Gevoelige mensen merken dat. Daar kunnen we op letten.',o:['Ja, vaak','Soms','Nee','Weet ik niet']},
+ {id:'moeite',t:'m',s:'Moeite met',q:'Waar heb je op het scherm moeite mee?',h:ALL,o:['Kleine tekst','Dunne of lichtgrijze tekst','Bepaalde kleuren uit elkaar houden','De muisaanwijzer terugvinden','Snelle bewegingen of animaties','Tekst met weinig contrast','!Geen van deze','+Iets anders']},
+ {id:'kleuren',t:'1',s:'Belang mooie kleuren',q:'Hoe belangrijk zijn mooie, levendige kleuren voor je?',h:'Bijvoorbeeld bij foto’s, films of presentaties. Je huidige scherm heeft vrij fletse kleuren.',o:['Heel belangrijk','Fijn, maar niet het belangrijkste','Niet belangrijk','Weet ik niet']}
+]},
+{id:'scherm',t:'Formaat en soort scherm',i:'Nu het formaat. Je huidige scherm is 15,6 inch: ongeveer 40 centimeter, schuin gemeten. Kleiner dan dat wordt het in elk geval niet.',q:[
+ {id:'grootte',t:'1',s:'Schermgrootte',q:'Welke schermgrootte heeft je voorkeur?',h:'Groter leest prettiger, maar de laptop wordt dan ook groter en zwaarder.',o:['15,6 inch, net als nu','Iets groter: 16 inch','Flink groter: 17 of 18 inch, ook al is hij zwaarder','Zo groot mogelijk, gewicht maakt niet uit','Weet ik niet, adviseer me maar']},
+ {id:'hoger',t:'1',s:'Hoger scherm (16:10)',q:'Veel nieuwe laptops hebben een iets hoger scherm. Je ziet dan meer regels tekst tegelijk, wat fijn is als je vergroot. Spreekt dat je aan?',o:['Ja, graag','Maakt me niet uit','Nee, liever breed zoals nu','Weet ik niet']},
+ {id:'touch',t:'1',s:'Aanraakscherm',q:'Wil je een aanraakscherm (touchscreen)?',h:'Dan kun je bijvoorbeeld met twee vingers inzoomen, zoals op je telefoon. Aanraakschermen zijn wel vaak glanzend.',o:['Ja, graag','Leuk als het erbij zit','Nee, niet nodig','Weet ik niet']},
+ {id:'tablet',t:'1',s:'Omklappen tot tablet',q:'Zou je een laptop willen die je kunt omklappen tot een tablet?',h:'Het scherm klapt dan helemaal om. Handig om iets dichtbij te lezen, maar zo’n laptop is vaak duurder en iets zwaarder.',o:['Ja','Misschien','Nee','Weet ik niet']},
+ {id:'monitor',t:'1',s:'Los beeldscherm',q:'Gebruik je thuis of op kantoor een los, groter beeldscherm?',h:'Een groot los scherm kan veel helpen als je slechtziend bent. Dan letten we op de juiste aansluiting.',o:['ja|Ja, en dat wil ik blijven gebruiken','Nee, maar dat lijkt me wel fijn','Nee, dat wil ik niet','Weet ik niet']},
+ {id:'monitorkabel',t:'1',s:'Aansluiting losse scherm',show:{id:'monitor',any:['ja']},q:'Hoe sluit je dat scherm nu aan?',h:'Zet het merk en het formaat van het scherm gerust in de toelichting.',o:['Met een HDMI-kabel','Met een USB-C-kabel','Via een dockingstation of adapter','Weet ik niet']}
+]},
+{id:'bediening',t:'Typen en bediening',i:'Het toetsenbord en de manier waarop je de laptop bedient, maken veel uit voor je gemak.',q:[
+ {id:'toetsen',t:'1',s:'Letters op toetsen',q:'Hoe goed kun je de letters op je huidige toetsenbord zien?',o:['Goed','Matig','Slecht','Ik typ blind, dus ik kijk er bijna niet naar']},
+ {id:'verlichting',t:'1',s:'Toetsenbordverlichting',q:'Hoe belangrijk is verlichting onder de toetsen voor je?',h:'Verlichte toetsen helpen om de letters te zien als er weinig licht is.',o:['Moet erop','Fijn, maar geen eis','Niet nodig','Weet ik niet']},
+ {id:'toetskleur',t:'1',s:'Kleur toetsenbord',q:'Welk toetsenbord leest voor jou het makkelijkst?',o:['Donkere toetsen met witte letters','Lichte toetsen met donkere letters','Maakt niet uit','Weet ik niet']},
+ {id:'cijferblok',t:'1',s:'Cijferblok',q:'Gebruik je het cijferblok, de rekenmachinetoetsen rechts op het toetsenbord?',h:'Handig voor administratie. Niet alle laptops hebben het.',o:['Ja, veel: het moet erop','Soms: fijn als het er is','Nee, nooit','Ik weet niet wat dat is']},
+ {id:'muis',t:'1',s:'Muis of touchpad',q:'Waarmee bedien je meestal de muisaanwijzer?',o:['Met het touchpad van de laptop','Met een losse muis','Allebei','+Anders']},
+ {id:'hello',t:'1',s:'Inloggen met vinger of gezicht',q:'Zou je willen inloggen met je vingerafdruk of je gezicht, in plaats van een wachtwoord of pincode te typen?',h:'Dat heet Windows Hello. Je huidige laptop heeft dit niet.',o:['Ja, graag','Maakt me niet uit','Nee, liever niet','Weet ik niet']}
+]},
+{id:'snelheid',t:'Snelheid en programma’s',i:'De nieuwe laptop moet merkbaar sneller en fijner werken. Daarvoor willen we weten wat je er allemaal mee doet.',q:[
+ {id:'programmas',t:'m',s:'Programma’s',q:'Welke programma’s en websites gebruik je regelmatig?',h:'Kies alles wat geldt. Gebruik je een boekhoudprogramma of een ander speciaal programma? Zet de naam in de toelichting.',o:['Word','Excel','Outlook of een ander mailprogramma','PowerPoint','Google Docs, Spreadsheets of Gmail','Een boekhoudprogramma','Teams','Zoom','Google Meet','LinkedIn en andere sociale media','Canva','Foto’s bewerken','Video’s bewerken','WhatsApp op de computer','Netflix, YouTube of andere streaming','+Iets anders']},
+ {id:'tabs',t:'1',s:'Tegelijk open',q:'Hoeveel tabbladen en programma’s heb je meestal tegelijk open?',o:['Een paar (1 tot 5)','Best veel (6 tot 15)','Heel veel (16 tot 30)','Ik tel ze niet meer (meer dan 30)','Weet ik niet']},
+ {id:'sneller',t:'m',s:'Moet sneller',q:'Wat moet vooral sneller gaan?',h:ALL,o:['Opstarten','Programma’s openen','Wisselen tussen programma’s','Websites laden','Bestanden openen en opslaan','Videobellen zonder haperen','Windows-updates','!Eigenlijk alles','+Iets anders']},
+ {id:'fotovideo',t:'1',s:'Foto’s of video bewerken',q:'Bewerk je foto’s of video’s, bijvoorbeeld voor social media of presentaties?',o:['Nee','Af en toe een foto','Regelmatig foto’s','Ook video’s','Weet ik niet']},
+ {id:'jaren',t:'1',s:'Hoe lang meegaan',q:'Hoe lang wil je met de nieuwe laptop doen?',h:'Wie lang wil doorgaan, heeft baat bij wat meer werkgeheugen en een sterkere processor.',o:['2 tot 3 jaar','4 tot 5 jaar','Zo lang mogelijk: 6 jaar of meer','Weet ik niet']}
+]},
+{id:'werk',t:'Werk, presentaties en voorlichting',i:'Je gebruikt de laptop ook voor je bedrijf: netwerken, administratie en voorlichting. Dit deel gaat over dat werk.',q:[
+ {id:'waar',t:'m',s:'Waar presenteren',q:'Waar geef je presentaties of voorlichting?',h:ALL,o:['Op scholen','Bij bedrijven of organisaties','In zorg- of welzijnsinstellingen','In zalen of op evenementen','Online, via Teams, Zoom of Meet','!Ik presenteer niet vanaf mijn eigen laptop','+Ergens anders']},
+ {id:'aansluiten',t:'m',s:'Aansluiten op beamer',q:'Hoe sluit je je laptop daar aan op het scherm, het digibord of de beamer?',h:'Je huidige laptop heeft een HDMI-aansluiting. Die willen we waarschijnlijk houden.',o:['Met een HDMI-kabel','Met een USB-C-kabel','Draadloos, bijvoorbeeld met ClickShare of casten','Ik gebruik de computer van de locatie','!Dat verschilt, ik weet het niet precies','+Anders']},
+ {id:'presenteren',t:'m',s:'Gebruikt bij presenteren',q:'Wat gebruik je tijdens het presenteren?',h:ALL,o:['PowerPoint','Google Presentaties','Canva','Keynote','Filmpjes met geluid','Een presenter of clicker (afstandsbediening voor dia’s)','Een losse speaker','Een losse microfoon','+Iets anders']},
+ {id:'mee',t:'1',s:'Hoe vaak mee',q:'Hoe vaak neem je je laptop mee de deur uit?',o:['(Bijna) elke dag','Een paar keer per week','Een paar keer per maand','Zelden of nooit']},
+ {id:'reizen',t:'m',s:'Hoe je reist',q:'Hoe ga je meestal naar een afspraak of presentatie?',h:ALL,o:['Met de auto','Met de trein of bus','Met de fiets','Lopend','Met een taxi of vervoersdienst','+Anders']},
+ {id:'bellen',t:'1',s:'Videobellen',q:'Hoe vaak videobel je, en hoe belangrijk is goed beeld en geluid?',h:'Je huidige camera is 720p. Dat is tegenwoordig vrij korrelig. Nieuwere laptops hebben scherpere camera’s en betere microfoons.',o:['Vaak, en het moet er professioneel uitzien','Regelmatig: goed is fijn','Af en toe: het hoeft niet perfect','Bijna nooit','Ik gebruik een losse webcam of headset']},
+ {id:'poorten',t:'m',s:'Gebruikte aansluitingen',q:'Welke aansluitingen heb je het afgelopen jaar gebruikt?',h:ALL,o:['HDMI (beamer, tv of scherm)','Gewone USB (USB-stick, muis, presenter)','USB-C','Netwerkkabel (internet via een kabel)','SD-kaartlezer (fotocamera)','Koptelefoonaansluiting','!Weet ik niet']},
+ {id:'wifiloos',t:'1',s:'Plekken zonder wifi',q:'Werk je weleens op plekken zonder goede wifi?',h:'Sommige laptops hebben een simkaart voor 4G of 5G. Je kunt ook je telefoon als hotspot gebruiken.',o:['Ja, vaak','Soms, dan gebruik ik mijn telefoon als hotspot','Nee','Weet ik niet']}
+]},
+{id:'onderweg',t:'Onderweg, accu en geluid',i:'Hoe draagbaar moet de laptop zijn, en hoe lang moet hij het volhouden zonder stopcontact?',q:[
+ {id:'gewicht',t:'1',s:'Belang gewicht',q:'Hoe belangrijk is het gewicht?',h:'Je huidige laptop weegt ongeveer 2 kilo.',o:['Zo licht mogelijk','Liever lichter dan nu','Ongeveer zoals nu is prima','Maakt niet uit: hij staat vooral op één plek','Weet ik niet']},
+ {id:'accu',t:'1',s:'Accuduur nodig',q:'Hoe lang moet de accu het minstens volhouden zonder stopcontact?',o:['1 tot 2 uur','3 tot 5 uur (een dagdeel)','6 tot 8 uur (een werkdag)','Zo lang mogelijk','Ik zit bijna altijd bij een stopcontact']},
+ {id:'accunu',t:'1',s:'Accuduur nu',q:'Hoe lang houdt je huidige accu het ongeveer vol?',o:['Minder dan 2 uur','2 tot 4 uur','4 tot 6 uur','Meer dan 6 uur','Weet ik niet']},
+ {id:'usbc',t:'1',s:'Opladen via USB-C',q:'Zou je de laptop willen opladen met een USB-C-oplader, zoals bij veel telefoons?',h:'Handig: één oplader voor alles, en je kunt dan ook een powerbank gebruiken.',o:['Ja, graag','Maakt niet uit','Weet ik niet']},
+ {id:'stil',t:'1',s:'Ventilatorgeluid',q:'Hoe erg vind je het als de ventilator hoorbaar is?',h:'Krachtige laptops, bijvoorbeeld voor games, maken vaker geluid. Ook tijdens een presentatie.',o:['Heel storend: hij moet stil zijn','Een beetje geluid is oké','Maakt me niet uit']},
+ {id:'speakers',t:'1',s:'Ingebouwde speakers',q:'Hoe belangrijk zijn goede ingebouwde speakers?',h:'Bijvoorbeeld voor een filmpje tijdens een voorlichting, zonder losse speaker.',o:['Heel belangrijk','Fijn','Niet belangrijk: ik gebruik een losse speaker of koptelefoon']},
+ {id:'stevig',t:'1',s:'Stevigheid',q:'Moet de laptop tegen een stootje kunnen, bijvoorbeeld omdat hij vaak in en uit een tas gaat?',o:['Ja, stevig en robuust is belangrijk','Normaal stevig is genoeg','Niet zo belangrijk']}
+]},
+{id:'vrijetijd',t:'Ontspanning en De Sims',i:'Gamen is geen hoofdzaak, maar een nieuwe Sims wil je wel kunnen spelen. Hoe belangrijk is dat?',q:[
+ {id:'ontspanning',t:'m',s:'Ontspanning',q:'Wat doe je voor ontspanning op je laptop?',h:ALL,o:['Films en series kijken','YouTube','Muziek luisteren','sims|De Sims 4','games|Andere games','Puzzels of kaartspellen','Online winkelen','!Weinig: vooral werk','+Iets anders']},
+ {id:'simsnu',t:'1',s:'Hoe het spel nu loopt',show:{id:'ontspanning',any:['sims','games']},q:'Hoe loopt De Sims 4 (of je andere game) nu op je laptop?',o:['Prima','Het hapert of laadt traag','Alleen op de laagste instellingen','Ik speel het op een ander apparaat','Weet ik niet']},
+ {id:'simsnieuw',t:'1',s:'Belang nieuwe Sims',q:'Hoe belangrijk is het dat een nieuwe Sims-game de komende jaren goed draait op je laptop?',h:'Nieuwe games vragen een sterkere grafische chip. Dat kan de laptop duurder, zwaarder of luider maken.',o:['moet|Moet echt kunnen','leuk|Leuk als het kan, maar geen eis','niet|Niet belangrijk']},
+ {id:'gamekosten',t:'1',s:'Mag meer kosten voor gamen',show:{id:'simsnieuw',any:['moet','leuk']},q:'Mag de laptop daarvoor duurder, zwaarder of luider worden?',o:['Ja, dan betaal ik graag wat meer','Een beetje, als het binnen mijn budget past','Nee, dan laat ik het gamen liever','Weet ik niet']},
+ {id:'gamemooi',t:'1',s:'Hoe mooi het spel moet zijn',show:{id:'simsnieuw',any:['moet','leuk']},q:'Hoe mooi moet het spel eruitzien?',h:'‘Gewoon goed speelbaar’ scheelt vaak veel geld.',o:['Gewoon goed speelbaar is genoeg','Mooi, op gemiddelde instellingen','Zo mooi mogelijk, alles op hoog','Weet ik niet']}
+]},
+{id:'overstap',t:'Bestanden, Windows en overstappen',i:'Een nieuwe laptop betekent ook overstappen. Deze vragen helpen om dat soepel te laten verlopen.',q:[
+ {id:'opslag',t:'1',s:'Opslag vol',q:'Hoe vol is de opslag van je huidige laptop ongeveer?',h:'Je laptop heeft 512 GB. Je ziet het in de Verkenner bij ‘Deze pc’. Geen idee? Kies ‘Weet ik niet’.',o:['Minder dan de helft','Ongeveer de helft','Bijna vol','Vol: ik moet steeds dingen verwijderen','Weet ik niet']},
+ {id:'bewaren',t:'m',s:'Waar bestanden staan',q:'Waar bewaar je je bestanden en foto’s?',h:ALL,o:['Alleen op de laptop zelf','OneDrive','Google Drive','Dropbox','iCloud','Op een USB-stick of externe harde schijf','!Weet ik niet','+Ergens anders']},
+ {id:'backup',t:'1',s:'Back-ups',q:'Maak je back-ups: reservekopieën van je bestanden?',o:['Ja, automatisch','Ja, af en toe zelf','Nee','Weet ik niet']},
+ {id:'office',t:'1',s:'Microsoft Office',q:'Hoe heb je Microsoft Office (Word, Excel, Outlook)?',h:'Een abonnement neem je makkelijk mee naar een nieuwe laptop. Een los gekochte versie soms niet.',o:['Een abonnement (Microsoft 365)','Eenmalig gekocht, bijvoorbeeld Office 2019 of 2021','Via mijn werk of bedrijf','Ik gebruik geen Microsoft Office','Weet ik niet']},
+ {id:'meeneem',t:'1',s:'Software die mee moet',q:'Staat er software op je laptop die mee moet en die je niet zomaar opnieuw kunt downloaden?',h:'Bijvoorbeeld vergrotingssoftware, een boekhoudprogramma of een programma van een klant. Zet de naam in de toelichting.',o:['Ja','Nee','Weet ik niet']},
+ {id:'hulp',t:'1',s:'Hulp bij overzetten',q:'Wil je hulp bij het overzetten van je bestanden en instellingen?',o:['Ja, graag','Nee, dat doe ik zelf','Weet ik niet']},
+ {id:'oud',t:'1',s:'Oude laptop',q:'Wat gebeurt er straks met je oude laptop?',h:'Dan zorgen we dat je gegevens er veilig af gaan.',o:['Ik houd hem als reserve','Iemand anders gaat hem gebruiken','Verkopen of inruilen','Weggooien of recyclen','Weet ik nog niet']},
+ {id:'systeem',t:'1',s:'Windows of iets anders',q:'Wil je bij Windows blijven, of sta je open voor iets anders?',h:'Een MacBook in dit formaat (16 inch) is duur en werkt anders. Een Chromebook werkt vooral via internet.',o:['Windows, zoals nu','Het liefst Windows, maar ik sta open voor advies','Ik sta open voor een MacBook','Ik sta open voor een Chromebook','Weet ik niet']},
+ {id:'merk',t:'m',s:'Merkvoorkeur',q:'Heb je een voorkeur voor bepaalde merken, of zijn er merken die je juist niet wilt?',h:'Zet de merken gerust in de toelichting.',o:['!Geen voorkeur','Graag weer HP','Ik heb een ander voorkeursmerk','Er is een merk dat ik niet wil']}
+]},
+{id:'budget',t:'Budget en aankoop',i:'Bijna klaar. Nu het praktische deel: wat mag hij kosten en waar wil je hem kopen?',q:[
+ {id:'bedrag',t:'1',s:'Budget',q:'Wat wil je ongeveer uitgeven aan de laptop zelf?',h:'Inclusief btw, zonder extra’s zoals een tas of Office.',o:['Tot € 600','€ 600 tot € 800','€ 800 tot € 1.000','€ 1.000 tot € 1.300','€ 1.300 tot € 1.600','€ 1.600 tot € 2.000','Meer dan € 2.000','Weet ik niet, adviseer me maar']},
+ {id:'hardheid',t:'1',s:'Hoe hard het budget is',q:'Hoe hard is dat budget?',o:['Echt de grens','Iets meer mag, als het echt beter is voor mijn ogen of de snelheid','Flexibel: kwaliteit gaat voor','Weet ik niet']},
+ {id:'zakelijk',t:'1',s:'Zakelijk kopen',q:'Koop je de laptop zakelijk, via je bedrijf?',h:'Dan kun je de btw vaak terugvragen, en er zijn zakelijke modellen met betere garantie en service.',o:['Ja, op naam van mijn bedrijf','Nee, privé','Weet ik nog niet']},
+ {id:'winkel',t:'m',s:'Waar kopen',q:'Waar koop je de laptop het liefst?',h:ALL,o:['Coolblue','Bol','MediaMarkt','Amazon','Rechtstreeks bij het merk','Een zakelijke leverancier','Een computerwinkel in de buurt','!Maakt niet uit','+Ergens anders']},
+ {id:'zien',t:'1',s:'Eerst in het echt zien',q:'Wil je het scherm eerst in het echt bekijken voordat je koopt?',h:'Voor slechtziende mensen is dat vaak heel waardevol.',o:['Ja, dat vind ik belangrijk','Liever wel, maar het hoeft niet','Nee, online bestellen is prima']},
+ {id:'garantie',t:'1',s:'Garantie en service',q:'Hoe belangrijk is extra garantie of snelle service?',h:'Bijvoorbeeld 3 jaar garantie, of reparatie aan huis, zodat je werk niet stil komt te liggen.',o:['Heel belangrijk','Fijn, als het niet te duur is','Niet nodig: de standaardgarantie is genoeg','Weet ik niet']},
+ {id:'wanneer',t:'1',s:'Wanneer nodig',q:'Wanneer heb je de nieuwe laptop nodig?',h:'Rond Black Friday en in december zijn er vaak aanbiedingen.',o:['Zo snel mogelijk','Binnen een paar weken','Binnen een paar maanden','Geen haast: ik wacht op een goede aanbieding']},
+ {id:'extra',t:'m',s:'Extra’s',q:'Wil je er nog iets bij?',h:ALL,o:['Een laptoptas of hoes','Een losse muis','Een groot los beeldscherm','Een USB-C-dock of adapter voor extra aansluitingen','Microsoft 365','Een virusscanner','Een losse webcam of headset','!Nee, alleen de laptop','+Iets anders']},
+ {id:'uiterlijk',t:'1',s:'Uiterlijk',q:'Hoe belangrijk is het uiterlijk van de laptop?',h:'Heb je een voorkeur voor een kleur? Zet die in de toelichting.',o:['Belangrijk: hij moet er professioneel en mooi uitzien','Een beetje','Niet belangrijk: het gaat om wat hij doet']}
+]},
+{id:'afronden',t:'Wat is het allerbelangrijkste?',i:'Tot slot: wat telt voor jou het zwaarst? Dan weten we waar we zeker niet op mogen bezuinigen.',q:[
+ {id:'top3',t:'m',max:3,s:'Top 3',q:'Wat zijn voor jou de 3 belangrijkste dingen?',h:'Kies er maximaal 3.',o:['Een duidelijk, helder scherm','Een groot scherm','Snelheid','Lang meegaan','Lange accuduur','Licht van gewicht','Stil','Gamen (De Sims)','Goede camera en microfoon','Een prettig toetsenbord','Een lage prijs','Stevig en betrouwbaar']},
+ {id:'eisen',t:'text',s:'Absolute eisen',q:'Zijn er dingen die de nieuwe laptop absoluut wél of juist níet moet hebben?',h:'Bijvoorbeeld: ‘moet een cijferblok hebben’ of ‘geen glanzend scherm’.'},
+ {id:'verder',t:'text',s:'Verder nog',q:'Wil je verder nog iets kwijt?',h:'Alles wat je belangrijk vindt en wat nog niet gevraagd is.'},
+ {id:'naam',t:'line',s:'Naam',q:'Wat is je naam?',h:'Zodat Juul weet van wie de antwoorden zijn.'}
+]}
+];
+
+const parseOpt=(s,i)=>{let x=false,o=false;if(s[0]==='!'){x=true;s=s.slice(1)}else if(s[0]==='+'){o=true;s=s.slice(1)}const k=s.indexOf('|');return k>0?{v:s.slice(0,k),l:s.slice(k+1),x,o}:{v:'o'+i,l:s,x,o}};
+const Q={};
+P.forEach((p,pi)=>p.q.forEach((q,qi)=>{if(q.o)q.o=q.o.map(parseOpt);Q[q.id]={q,pi,qi}}));
+
+let S={a:{},n:{},sentAt:'',sentHash:'',sentFor:'',sentParts:[]};
+let storageOK=false;
+try{localStorage.setItem(KEY+'-t','1');localStorage.removeItem(KEY+'-t');storageOK=true}catch(e){}
+if(storageOK){try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&typeof d==='object'&&d.a&&typeof d.a==='object')S={...S,...d,a:d.a,n:(d.n&&typeof d.n==='object')?d.n:{}}}catch(e){}}
+let saveT=0;
+const saveNow=()=>{if(!storageOK)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const save=()=>{clearTimeout(saveT);saveT=setTimeout(saveNow,300)};
+addEventListener('pagehide',saveNow);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saveNow()});
+
+const $=id=>document.getElementById(id);
+const main=$('main');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const vis=q=>{if(!q.show)return true;const v=S.a[q.show.id];return Array.isArray(v)?v.some(x=>q.show.any.includes(x)):q.show.any.includes(v)};
+const done=q=>{const v=S.a[q.id];if(q.t==='m')return Array.isArray(v)&&v.length>0;if(q.t==='1')return typeof v==='string'&&v!=='';return typeof v==='string'&&v.trim()!==''};
+const counts=()=>{let a=0,t=0;P.forEach(p=>p.q.forEach(q=>{if(vis(q)){t++;if(done(q))a++}}));return{a,t}};
+const ansText=q=>{const v=S.a[q.id];if(v==null)return'';if(q.t==='text'||q.t==='line')return String(v).trim().replace(/\s+/g,' ');if(q.t==='1'){const o=q.o.find(o=>o.v===v);return o?o.l:''}return(Array.isArray(v)?v:[]).map(x=>q.o.find(o=>o.v===x)).filter(Boolean).map(o=>o.l).join('; ')};
+const nameVal=()=>String(S.a.naam||'').trim().replace(/\s+/g,' ').slice(0,80);
+const fmt=d=>{try{return new Intl.DateTimeFormat('nl-NL',{dateStyle:'long',timeStyle:'short'}).format(d)}catch(e){return d.toISOString()}};
+function build(withDate){
+ const{a,t}=counts();
+ let head='Laptop-vragenlijst van '+(nameVal()||'(geen naam ingevuld)')+'\n';
+ if(withDate)head+='Verzonden: '+fmt(new Date())+'\n';
+ head+='Beantwoord: '+a+' van '+t+' vragen\n';
+ const skipped=[];
+ const blocks=P.map((p,pi)=>{let b='\n--- Deel '+(pi+1)+': '+p.t+' ---\n',any=false;
+  p.q.forEach((q,qi)=>{if(!vis(q))return;const ans=ansText(q),note=(S.n[q.id]||'').trim().replace(/\s+/g,' ');
+   if(!ans&&!note){skipped.push(q.s);return}
+   any=true;b+=(pi+1)+'.'+(qi+1)+' '+q.s+': '+(ans||'(geen keuze)')+'\n';if(note&&q.o)b+='    Toelichting: '+note+'\n'});
+  return any?b:''}).filter(Boolean);
+ if(skipped.length)blocks.push('\nOvergeslagen: '+skipped.join('; ')+'\n');
+ return{head,blocks};
+}
+const fullText=withDate=>{const r=build(withDate);return r.head+r.blocks.join('')};
+const hash=s=>{let h=5381;for(let i=0;i<s.length;i++)h=((h*33)^s.charCodeAt(i))>>>0;return h.toString(36)};
+const urlFor=(name,txt)=>FORM+'?'+new URLSearchParams([[E_NAAM,name],[E_TXT,txt],['submit','Submit']]).toString();
+function chunks(){
+ const name=nameVal(),r=build(true),fits=s=>urlFor(name,'Zending 9 van 9\n'+s).length<=MAXURL,out=[];
+ let cur=r.head;const push=()=>{if(cur.trim())out.push(cur);cur=''};
+ for(const b of r.blocks){
+  if(fits(cur+b)){cur+=b;continue}
+  if(fits(b)&&cur!==r.head){push();cur=b;continue}
+  for(const ln of b.split('\n')){const l=ln+'\n';if(fits(cur+l))cur+=l;else{push();cur=fits(l)?l:l.slice(0,1200)+'…\n'}}
+ }
+ push();
+ return out.length>1?out.map((c,i)=>'Zending '+(i+1)+' van '+out.length+'\n'+c):out;
+}
+
+function qHTML(q){
+ const id=q.id;
+ let h='<fieldset class="q" id="q-'+id+'"'+(q.h?' aria-describedby="h-'+id+'"':'')+(vis(q)?'':' hidden')+'><legend id="l-'+id+'">'+esc(q.q)+'</legend>';
+ if(q.h)h+='<p class="help" id="h-'+id+'">'+esc(q.h)+'</p>';
+ if(q.max)h+='<p class="help max" id="m-'+id+'" aria-live="polite"></p>';
+ if(q.o){
+  const type=q.t==='1'?'radio':'checkbox',v=S.a[id];
+  h+='<div class="opts">'+q.o.map(o=>{const on=q.t==='1'?v===o.v:Array.isArray(v)&&v.includes(o.v);
+   return '<label class="opt"><input type="'+type+'" name="'+id+'" value="'+esc(o.v)+'"'+(on?' checked':'')+(o.x?' data-x="1"':'')+(o.o?' data-o="1"':'')+'><span>'+esc(o.l)+'</span></label>'}).join('')+'</div>';
+  const n=S.n[id]||'',open=n.trim()!=='';
+  h+='<button type="button" class="note-btn" data-note="'+id+'" aria-expanded="'+open+'" aria-controls="n-'+id+'">'+(open?'Toelichting verbergen':'+ Toelichting toevoegen (optioneel)')+'</button>'
+   +'<div class="note" id="n-'+id+'"'+(open?'':' hidden')+'><label class="sr" for="t-'+id+'">Toelichting</label><textarea id="t-'+id+'" data-tnote="'+id+'" maxlength="300" rows="3" placeholder="Typ of spreek hier je toelichting in">'+esc(n)+'</textarea><p class="count" id="c-'+id+'"></p></div>';
+ }else if(q.t==='text'){
+  h+='<textarea id="a-'+id+'" data-text="'+id+'" maxlength="800" rows="4" aria-labelledby="l-'+id+'"'+(q.h?' aria-describedby="h-'+id+'"':'')+' placeholder="Typ of spreek hier je antwoord in">'+esc(S.a[id]||'')+'</textarea><p class="count" id="c-'+id+'"></p>';
+ }else{
+  h+='<input type="text" id="a-'+id+'" data-text="'+id+'" maxlength="80" autocomplete="name" aria-labelledby="l-'+id+'"'+(q.h?' aria-describedby="h-'+id+'"':'')+' value="'+esc(S.a[id]||'')+'">';
+ }
+ return h+'</fieldset>';
+}
+
+function formHTML(){
+ return '<h1 id="vh" tabindex="-1">Op zoek naar je nieuwe laptop</h1>'
+ +'<p class="lead">Juul helpt je met het uitzoeken van een nieuwe laptop. Vertel hier wat jij nodig hebt: voor je ogen, je werk en je vrije tijd. Het invullen duurt ongeveer 20 minuten.</p>'
+ +'<p class="intro">Tik bij elke vraag aan wat bij je past. Twijfel je? Kies ‘Weet ik niet’. Onder elke vraag kun je iets toelichten, maar dat hoeft niet; je kunt ook inspreken met de microfoon op je toetsenbord. '+(storageOK?'Je antwoorden blijven op deze telefoon bewaard, dus je kunt tussendoor stoppen. ':'')+'Onderaan staat de knop Verzenden. Juul zoekt daarna samen met Claude, een AI-assistent, de beste laptops voor je uit.</p>'
+ +P.map(p=>'<section class="sec" aria-labelledby="s-'+p.id+'"><h2 id="s-'+p.id+'">'+esc(p.t)+'</h2><p class="intro">'+esc(p.i)+'</p>'+p.q.map(qHTML).join('')+'</section>').join('')
+ +'<section class="end" aria-labelledby="endh"><h2 id="endh">Klaar?</h2><p class="lead" id="tally"></p><div id="sendArea"></div><p class="err" id="err" role="alert"></p><p class="small">Je antwoorden gaan alleen naar Juul en worden alleen gebruikt om een laptop voor je te zoeken.</p></section>';
+}
+const CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function thanksHTML(){
+ return '<div class="thanks"><div class="mark">'+CHECK+'</div><h1 id="vh" tabindex="-1">Dank je wel voor het invullen!</h1>'
+ +'<p class="lead">Je antwoorden zijn verzonden naar Juul. Je kunt deze pagina nu sluiten.</p>'
+ +(SILENT?'':'<p class="intro">Er ging ook even een pagina van Google open. Die mag je sluiten.</p>')
+ +'<p><button type="button" class="btn ghost" data-edit="1">Antwoorden bekijken of aanpassen</button></p></div>';
+}
+
+function setTop(pct,label){$('fill').style.width=pct+'%';const b=$('bar');b.setAttribute('aria-valuenow',pct);b.setAttribute('aria-valuetext',label);$('pct').textContent=pct+'%'}
+function updateTop(){const c=counts(),pct=c.t?Math.round(c.a/c.t*100):0;setTop(pct,pct+' procent ingevuld')}
+let endT=0;
+function updateEnd(){
+ const tally=$('tally');if(!tally)return;
+ const c=counts();
+ tally.textContent=c.a===c.t?'Je hebt alle '+c.t+' vragen beantwoord.':'Je hebt '+c.a+' van de '+c.t+' vragen beantwoord. Overgeslagen vragen mag je leeg laten.';
+ const area=$('sendArea');
+ if(SILENT){if(!$('sendBtn'))area.innerHTML='<button type="button" class="btn" id="sendBtn">Verzenden</button>';return}
+ const ch=chunks(),name=nameVal(),cur=hash(fullText(false)),parts=S.sentFor===cur?S.sentParts:[];
+ area.innerHTML=ch.map((t,i)=>'<a class="btn" href="'+esc(urlFor(name,t))+'" target="_blank" rel="noopener" data-send="'+i+'">'+(ch.length>1?'Verzenden: deel '+(i+1)+' van '+ch.length:'Verzenden')+(parts[i]?' (verzonden)':'')+'</a>').join('');
+}
+const queueEnd=()=>{clearTimeout(endT);endT=setTimeout(updateEnd,250)};
+
+function counter(t){const c=$('c-'+(t.dataset.tnote||t.dataset.text));if(!c)return;const m=+t.maxLength,l=t.value.length;c.textContent=m>0&&l>=m*.8?'Nog '+(m-l)+' tekens over':''}
+function enforceMax(q){const fs=$('q-'+q.id);if(!fs)return;const bs=[...fs.querySelectorAll('input')],n=bs.filter(b=>b.checked).length;bs.forEach(b=>{b.disabled=!b.checked&&n>=q.max});const m=$('m-'+q.id);if(m)m.textContent=n>=q.max?'Je hebt er '+q.max+' gekozen. Haal er eerst een weg als je wilt wisselen.':''}
+function updateVis(){P.forEach(p=>p.q.forEach(q=>{if(q.show){const fs=$('q-'+q.id);if(fs)fs.hidden=!vis(q)}}))}
+function openNote(id,focus,why){const b=main.querySelector('[data-note="'+id+'"]'),box=$('n-'+id);if(!box||!b)return;box.hidden=false;b.setAttribute('aria-expanded','true');b.textContent='Toelichting verbergen';const ta=$('t-'+id);if(why)ta.placeholder='Wat bedoel je met ‘'+why+'’?';if(focus)ta.focus()}
+
+function showForm(){main.innerHTML=formHTML();P.forEach(p=>p.q.forEach(q=>{if(q.max)enforceMax(q)}));main.querySelectorAll('textarea').forEach(counter);updateTop();updateEnd()}
+function showThanks(){main.innerHTML=thanksHTML();setTop(100,'Klaar: verzonden');window.scrollTo(0,0);const h=$('vh');if(h)h.focus({preventScroll:true})}
+
+async function sendSilent(){
+ const btn=$('sendBtn'),err=$('err');if(!btn||btn.disabled)return;
+ err.textContent='';btn.disabled=true;btn.textContent='Bezig met verzenden…';
+ const body=new URLSearchParams([[E_NAAM,nameVal()],[E_TXT,fullText(true)],['fvv','1'],['pageHistory','0']]);
+ const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),20000);
+ try{
+  await fetch(FORM,{method:'POST',mode:'no-cors',body,signal:ac.signal});
+  clearTimeout(tm);S.sentAt=new Date().toISOString();S.sentHash=hash(fullText(false));saveNow();showThanks();
+ }catch(e){
+  clearTimeout(tm);btn.disabled=false;btn.textContent='Verzenden';
+  err.textContent='Verzenden lukte niet. Controleer je internetverbinding en tik nog een keer op Verzenden.';
+ }
+}
+function markSent(i){const cur=hash(fullText(false)),n=chunks().length;if(S.sentFor!==cur){S.sentFor=cur;S.sentParts=[]}S.sentParts[i]=true;let all=true;for(let k=0;k<n;k++)if(!S.sentParts[k])all=false;if(all){S.sentHash=cur;S.sentAt=new Date().toISOString();saveNow();setTimeout(showThanks,700)}else{saveNow();setTimeout(updateEnd,300)}}
+
+main.addEventListener('change',e=>{
+ const t=e.target;if(!(t instanceof HTMLInputElement)||(t.type!=='radio'&&t.type!=='checkbox'))return;
+ const info=Q[t.name];if(!info)return;const q=info.q,id=q.id;
+ if(t.type==='radio')S.a[id]=t.value;
+ else{const bs=[...$('q-'+id).querySelectorAll('input[type=checkbox]')];
+  if(t.checked){if(t.dataset.x)bs.forEach(b=>{if(b!==t)b.checked=false});else bs.forEach(b=>{if(b.dataset.x)b.checked=false})}
+  const vals=bs.filter(b=>b.checked).map(b=>b.value);if(vals.length)S.a[id]=vals;else delete S.a[id];
+  if(q.max)enforceMax(q)}
+ if(t.checked&&t.dataset.o){const o=q.o.find(o=>o.v===t.value);openNote(id,true,o?o.l:'')}
+ updateVis();updateTop();queueEnd();save();
+});
+main.addEventListener('input',e=>{const t=e.target;
+ if(t.dataset.tnote){S.n[t.dataset.tnote]=t.value;counter(t);queueEnd();save()}
+ else if(t.dataset.text){S.a[t.dataset.text]=t.value;if(t.tagName==='TEXTAREA')counter(t);updateTop();queueEnd();save()}
+});
+main.addEventListener('click',e=>{const b=e.target.closest('button,a');if(!b||!main.contains(b))return;const d=b.dataset;
+ if(d.note){const box=$('n-'+d.note);if(box.hidden)openNote(d.note,true);else{box.hidden=true;b.setAttribute('aria-expanded','false');b.textContent='+ Toelichting toevoegen (optioneel)'}}
+ else if(b.id==='sendBtn')sendSilent();
+ else if(d.send!=null)markSent(+d.send);
+ else if(d.edit){showForm();window.scrollTo(0,0);const h=$('vh');if(h)h.focus({preventScroll:true})}
+});
+const top=$('top');
+const hro=new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',top.offsetHeight+'px'));
+hro.observe(top);
+if(S.sentAt&&S.sentHash&&S.sentHash===hash(fullText(false)))showThanks();else showForm();
+}
+</script>
+</body>
+</html>
