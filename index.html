@@ -194,7 +194,7 @@ const parseOpt=(s,i)=>{let x=false,o=false;if(s[0]==='!'){x=true;s=s.slice(1)}el
 const Q={};
 P.forEach((p,pi)=>p.q.forEach((q,qi)=>{if(q.o)q.o=q.o.map(parseOpt);Q[q.id]={q,pi,qi}}));
 
-let S={a:{},n:{},sentAt:'',sentHash:'',sentFor:'',sentParts:[]};
+let S={a:{},n:{},sentAt:'',sentHash:'',sentFor:'',sentParts:[],sentVia:''};
 let storageOK=false;
 try{localStorage.setItem(KEY+'-t','1');localStorage.removeItem(KEY+'-t');storageOK=true}catch(e){}
 if(storageOK){try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&typeof d==='object'&&d.a&&typeof d.a==='object')S={...S,...d,a:d.a,n:(d.n&&typeof d.n==='object')?d.n:{}}}catch(e){}}
@@ -277,6 +277,12 @@ function thanksHTML(){
  +'<p><button type="button" class="btn ghost" data-edit="1">Antwoorden bekijken of aanpassen</button></p></div>';
 }
 
+function retryHTML(){
+ return '<div class="thanks"><h1 id="vh" tabindex="-1">Je antwoorden zijn nog niet aangekomen</h1>'
+ +'<p class="lead">Sorry, er ging iets mis bij het verzenden. Je antwoorden staan nog veilig op deze telefoon. Tik op de knop om ze opnieuw te versturen.</p>'
+ +'<button type="button" class="btn" id="sendBtn">Opnieuw versturen</button><p class="err" id="err" role="alert"></p>'
+ +'<p><button type="button" class="btn ghost" data-edit="1">Antwoorden bekijken of aanpassen</button></p></div>';
+}
 function setTop(pct,label){$('fill').style.width=pct+'%';const b=$('bar');b.setAttribute('aria-valuenow',pct);b.setAttribute('aria-valuetext',label);$('pct').textContent=pct+'%'}
 function updateTop(){const c=counts(),pct=c.t?Math.round(c.a/c.t*100):0;setTop(pct,pct+' procent ingevuld')}
 let endT=0;
@@ -298,6 +304,7 @@ function openNote(id,focus,why){const b=main.querySelector('[data-note="'+id+'"]
 
 function showForm(){main.innerHTML=formHTML();P.forEach(p=>p.q.forEach(q=>{if(q.max)enforceMax(q)}));main.querySelectorAll('textarea').forEach(counter);updateTop();updateEnd()}
 function showThanks(){main.innerHTML=thanksHTML();setTop(100,'Klaar: verzonden');window.scrollTo(0,0);const h=$('vh');if(h)h.focus({preventScroll:true})}
+function showRetry(){main.innerHTML=retryHTML();updateTop();window.scrollTo(0,0);const h=$('vh');if(h)h.focus({preventScroll:true})}
 
 async function sendSilent(){
  const btn=$('sendBtn'),err=$('err');if(!btn||btn.disabled)return;
@@ -306,7 +313,7 @@ async function sendSilent(){
  const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),20000);
  try{
   await fetch(FORM,{method:'POST',mode:'no-cors',body,signal:ac.signal});
-  clearTimeout(tm);S.sentAt=new Date().toISOString();S.sentHash=hash(fullText(false));saveNow();showThanks();
+  clearTimeout(tm);S.sentAt=new Date().toISOString();S.sentHash=hash(fullText(false));S.sentVia='v2';saveNow();showThanks();
  }catch(e){
   clearTimeout(tm);btn.disabled=false;btn.textContent='Verzenden';
   err.textContent='Verzenden lukte niet. Controleer je internetverbinding en tik nog een keer op Verzenden.';
@@ -338,7 +345,8 @@ main.addEventListener('click',e=>{const b=e.target.closest('button,a');if(!b||!m
 const top=$('top');
 const hro=new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',top.offsetHeight+'px'));
 hro.observe(top);
-if(S.sentAt&&S.sentHash&&S.sentHash===hash(fullText(false)))showThanks();else showForm();
+if(SILENT&&S.sentAt&&S.sentVia!=='v2'&&Object.keys(S.a).length)showRetry();
+else if(S.sentAt&&S.sentHash&&S.sentHash===hash(fullText(false)))showThanks();else showForm();
 }
 </script>
 </body>
